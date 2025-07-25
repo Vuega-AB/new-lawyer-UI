@@ -1,0 +1,198 @@
+{% extends "base_auth.html" %} {# Or your main application base template #}
+
+{% block title %}Setup Two-Factor Authentication - IntelLaw{% endblock %}
+
+{% block head_extra %}
+<style>
+    body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            background: linear-gradient(to bottom right, #000000, #434343, #f5f5f5);
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+    .auth-form-panel { /* If you use this class from the OTP page structure */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 100vh;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .container.auth-form-box { /* Specific container for this form */
+        background-color: #ffffff;
+        padding: 40px 48px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        width: 100%;
+        max-width: 500px; /* Can be a bit wider to accommodate QR code and text */
+        text-align: left; /* Align text to the left for instructions */
+    }
+
+    .auth-form-box h2 {
+        font-size: 26px;
+        font-weight: 600;
+        margin-bottom: 24px; /* More space after title */
+        color: #111827;
+        text-align: center; /* Center the main title */
+    }
+
+    .auth-form-box p.instruction-step { /* For step instructions */
+        font-size: 15px;
+        color: #374151; /* Slightly darker for instructions */
+        margin-bottom: 16px;
+        line-height: 1.6;
+    }
+    .auth-form-box strong {
+        font-weight: 600;
+        color: #1f2937;
+    }
+    .auth-form-box code { /* For displaying the secret key */
+        background-color: #f3f4f6;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+        color: #1f2937;
+    }
+
+    .qr-code-container {
+        text-align: center;
+        margin-top: 16px;
+        margin-bottom: 24px;
+    }
+    .qr-code-container img {
+        border: 1px solid #e5e7eb; /* Lighter border */
+        padding: 8px; /* Padding around QR */
+        border-radius: 8px;
+        background-color: #ffffff; /* Ensure white background for QR */
+        max-width: 220px; /* Adjust size as needed */
+        height: auto;
+        display: inline-block; /* To allow text-align:center to work */
+    }
+    
+    .flash-messages { margin-bottom: 20px; text-align: left; }
+    .flash-messages .alert { /* ... (keep your alert styles) ... */ }
+
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+    .form-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 8px;
+    }
+    .form-group input[type="text"] {
+        width: 100%;
+        padding: 12px 14px;
+        font-size: 16px;
+        border: 1.5px solid #d1d5db;
+        border-radius: 8px;
+        outline: none;
+        box-sizing: border-box;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input[type="text"]:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3.5px rgba(59, 130, 246, 0.2);
+    }
+
+    .form-actions { /* Container for buttons */
+        margin-top: 28px;
+        display: flex;
+        gap: 12px; /* Space between buttons */
+    }
+    .form-actions .btn { /* Common button style */
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        flex-grow: 1; /* Make buttons share space if needed */
+    }
+    .form-actions .btn-primary {
+        background-color: #1f2937; /* Dark primary button */
+        color: white;
+    }
+    .form-actions .btn-primary:hover {
+        background-color: #374151;
+    }
+    .form-actions .btn-secondary {
+        background-color: #e5e7eb; /* Light grey secondary button */
+        color: #374151;
+        border: 1px solid #d1d5db;
+    }
+    .form-actions .btn-secondary:hover {
+        background-color: #d1d5db;
+    }
+
+    hr.divider {
+        border: none;
+        border-top: 1px solid #e5e7eb;
+        margin: 28px 0; /* More space around divider */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-form-panel">
+    <div class="container auth-form-box">
+        <h2>Setup Two-Factor Authentication</h2>
+
+        {% if is_forced_setup %}
+        <div class="alert alert-info" style="text-align: left;">
+            For enhanced security, you are required to set up Two-Factor Authentication before proceeding.
+            User: <strong>{{ user_email_for_display }}</strong>
+        </div>
+        {% endif %}
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+
+        <p class="instruction-step"><strong>Step 1:</strong> Scan the QR code below with your authenticator app (e.g., Google Authenticator, Authy, Microsoft Authenticator).</p>
+        
+        <div class="qr-code-container">
+            <img src="{{ qr_code_data_url }}" alt="2FA QR Code">
+        </div>
+        
+        <hr class="divider">
+        
+        <p class="instruction-step"><strong>Step 2:</strong> After adding the account to your authenticator app, enter the 6-digit code it generates below to verify and complete setup.</p>
+        
+        <form method="POST" action="{{ url_for('setup_2fa_page') }}">
+            <div class="form-group">
+                <label for="totp_code">Verification Code</label>
+                <input type="text" class="form-control" id="totp_code" name="totp_code" 
+                       required autocomplete="one-time-code" inputmode="numeric" 
+                       pattern="[0-9]{6}" maxlength="6" placeholder="Enter 6-digit code">
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Verify & Enable 2FA</button>
+                {% if not is_forced_setup %} {# Only show Cancel if not a forced setup #}
+                <a href="{{ url_for('profile_page') }}" class="btn btn-secondary">Cancel</a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

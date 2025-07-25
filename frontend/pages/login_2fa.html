@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two-Factor Authentication</title>
+    <style>
+        /* All your CSS goes here - no changes needed to the styles */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(to bottom right, #000000, #434343, #f5f5f5); background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .auth-form-panel { display: flex; justify-content: center; align-items: center; width: 100%; min-height: 100vh; padding: 20px; box-sizing: border-box; }
+        .container.auth-form-box { background-color: #ffffff; padding: 40px 48px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); width: 100%; max-width: 440px; text-align: center; }
+        .auth-form-box h2 { font-size: 26px; font-weight: 600; margin-bottom: 12px; color: #111827; }
+        .auth-form-box .subtitle { font-size: 15px; color: #4b5563; margin-bottom: 24px; line-height: 1.6; }
+        .form-group { margin-bottom: 24px; text-align: left; }
+        .form-group label { display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 8px; }
+        .form-group input[type="text"] { width: 100%; padding: 12px 14px; font-size: 16px; border: 1.5px solid #d1d5db; border-radius: 8px; outline: none; box-sizing: border-box; transition: border-color 0.2s, box-shadow 0.2s; }
+        .form-group input[type="text"]:focus { border-color: #3b82f6; box-shadow: 0 0 0 3.5px rgba(59, 130, 246, 0.2); }
+        .submit-btn { width: 100%; padding: 13px; background-color: #1f2937; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 500; cursor: pointer; transition: background-color 0.2s; margin-bottom: 20px; }
+        .submit-btn:hover { background-color: #374151; }
+        .text-center { text-align: center; }
+        .mt-3 { margin-top: 1rem !important; }
+        .link-style { color: #4b5563; text-decoration: none; font-size: 14px; font-weight: 500; }
+        .link-style:hover { color: #1f2937; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="auth-form-panel">
+        <div class="container auth-form-box">
+            <h2>Two-Factor Authentication</h2>
+
+            <!-- MODIFICATION #1: The {{ email }} placeholder is replaced with a <span>.
+                 This span has an ID so our JavaScript can find it and insert the email. -->
+            <p class="subtitle">
+                Please enter the 6-digit code from your authenticator app for <strong id="user-email-placeholder">your account</strong>.
+            </p>
+
+            <!-- MODIFICATION #2: The form's action is removed and an ID is added.
+                 This allows our JavaScript to take control of the form submission. -->
+            <form id="2fa-form">
+                <div class="form-group">
+                    <label for="totp_code">Authentication Code</label>
+                    <input type="text" id="totp_code" name="totp_code"
+                           required autofocus autocomplete="one-time-code"
+                           inputmode="numeric" pattern="[0-9]{6}" maxlength="6"
+                           placeholder="_ _ _ _ _ _">
+                </div>
+                <button type="submit" class="submit-btn">Verify Code</button>
+            </form>
+
+            <!-- MODIFICATION #3: The Flask url_for() is replaced with a simple link.
+                 An ID is added so our JavaScript can make it a "logout" button. -->
+            <p class="text-center mt-3">
+                <a href="login.html" id="logout-link" class="link-style">Cancel and Logout</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- MODIFICATION #4: The main script to make this page interactive. -->
+    <script>
+    // The address where your Python server is running
+    const API_BASE_URL = 'http://127.0.0.1:5000';
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const userString = localStorage.getItem('user_pending_2fa');
+        if (!userString) {
+            alert("An error occurred. Please log in again.");
+            window.location.href = 'login.html';
+            return;
+        }
+
+        const user = JSON.parse(userString);
+        document.getElementById('user-email-placeholder').textContent = user.email;
+
+        const form2FA = document.getElementById('2fa-form');
+        form2FA.addEventListener('submit', async (event) => { // <<< Make this function async
+            event.preventDefault();
+            const code = document.getElementById('totp_code').value;
+
+            // ---- THIS IS THE NEW LOGIC THAT REPLACES THE ALERT ----
+            try {
+                // 1. Send the user's email and the entered code to the backend
+                const response = await fetch(`${API_BASE_URL}/api/auth/verify-2fa`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: user.email, // The email of the user pending 2FA
+                        totp_code: code    // The code they typed in
+                    }),
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    // 2. The backend confirmed the code was correct!
+                    alert(result.message); // "Two-Factor Authentication successful!"
+
+                    // Clean up the temporary item
+                    localStorage.removeItem('user_pending_2fa');
+
+                    // Set the final 'currentUser' to complete the login
+                    localStorage.setItem('currentUser', JSON.stringify(result.user));
+
+                    // Redirect to the main application
+                    window.location.href = '############################';
+                } else {
+                    // 3. The backend said the code was wrong. Show the error.
+                    alert(`Verification Failed: ${result.message}`);
+                }
+
+            } catch (error) {
+                // 4. Handle network errors (e.g., if the backend server is down)
+                console.error("2FA verification request failed:", error);
+                alert("Error: Could not connect to the server. Please try again.");
+            }
+        });
+
+        // The logout link logic remains the same
+        const logoutLink = document.getElementById('logout-link');
+        logoutLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            localStorage.removeItem('user_pending_2fa');
+            window.location.href = 'login.html';
+        });
+    });
+</script>
+
+</body>
+</html>

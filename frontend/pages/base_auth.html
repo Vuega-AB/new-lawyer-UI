@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}IntelLaw Auth{% endblock %}</title>
+    {# Link to your global CSS or a specific auth CSS #}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth_styles.css') }}"> {# Assuming you have an auth_styles.css #}
+    <style>
+        /* Or include some basic common styles here if not using a separate file */
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f3f4f6; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            color: #1f2937;
+        }
+        .container { /* A common container for auth forms */
+            background-color: #ffffff;
+            padding: 32px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px; /* Adjust as needed */
+            text-align: center;
+        }
+        .alert { padding: 10px; border-radius: 6px; margin-bottom: 15px; font-size: 14px; }
+        .alert-danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .alert-warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        /* Add more common auth page styles here */
+    </style>
+    {% block head_extra %}{% endblock %} {# For page-specific head elements #}
+</head>
+<body>
+    {% block content %}{% endblock %}
+
+    {# Common JS if any, or page-specific JS in their blocks #}
+    {% block scripts %}{% endblock %}
+</body>
+</html>

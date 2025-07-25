@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Your Email - IntelLaw</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        /* --- General Body and Link Styles (Keep as is) --- */
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            background: linear-gradient(to bottom right, #000000, #434343, #f5f5f5);
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+         header {
+            display: flex;
+            justify-content: flex-end; /* "Already have an account?" to the right */
+            margin-bottom: 24px;
+            font-size: 14px;
+        }
+        header a {
+            color: #3b82f6; /* Blue link */
+            text-decoration: none;
+            font-weight: 500;
+        }
+        header a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Container Styling (Adjust width and padding) --- */
+        .container {
+            background-color: #ffffff;
+            padding: 48px 56px;          /* Increased padding for more space */
+            border-radius: 16px;         /* Slightly larger border radius */
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1); /* Stronger shadow */
+            width: 100%;
+            max-width: 500px;          /* Increased max width */
+            text-align: center;
+        }
+
+        /* --- Heading & Text Styles (Keep as is, maybe adjust margins slightly) --- */
+        h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #111827; /* Very dark grey, almost black */
+        }
+        .subtitle {
+            font-size: 16px;       /* Increased font size */
+            color: #4b5563;        /* Medium grey */
+            margin-bottom: 16px; /* Increased margin */
+        }
+        .email-display {
+            font-size: 15px;        /* Increased font size */
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 32px; /* Increased margin */
+            word-break: break-all;
+        }
+
+        /* --- OTP Input Styling (Increased Size) --- */
+        .otp-label {
+            display: block;
+            font-size: 16px;       /* Increased label font size */
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 16px; /* Increased */
+            text-align: left;
+        }
+        .otp-inputs {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;               /* Increased gap between boxes */
+            margin-bottom: 32px;    /* Increased */
+        }
+        .otp-inputs input {
+            width: 60px;               /* Increased width for boxes */
+            height: 70px;              /* Increased height for boxes */
+            text-align: center;
+            font-size: 24px;           /* Increased font size inside boxes */
+            font-weight: 500;
+            border: 2px solid #d1d5db; /* Stronger border */
+            border-radius: 12px;        /* Rounded corners */
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-sizing: border-box; /* Make sure padding doesn't increase overall size */
+        }
+        .otp-inputs input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2); /* Larger shadow */
+        }
+        /* For Webkit browsers to hide number input spinners */
+        .otp-inputs input::-webkit-outer-spin-button,
+        .otp-inputs input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .otp-inputs input[type=number] {
+            -moz-appearance: textfield; /* Firefox */
+        }
+
+
+        /* --- Button and Links (Adjust margins) --- */
+        .continue-btn {
+            width: 100%;
+            padding: 14px;           /* Increased button padding */
+            background-color: #1f2937;
+            color: white;
+            border: none;
+            border-radius: 10px;        /* More rounded corners */
+            font-size: 18px;           /* Increased button font size */
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .continue-btn:hover {
+            background-color: #374151;
+        }
+        .links-footer {
+            margin-top: 32px; /* Increased space above links */
+            font-size: 15px;
+            color: #4b5563;
+        }
+        .links-footer a, .links-footer button.link-style {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+        .links-footer a:hover, .links-footer button.link-style:hover {
+            text-decoration: underline;
+        }
+        
+        /* --- Flash Messages Styles (Keep) --- */
+        .flash-messages {
+            margin-bottom: 20px;
+        }
+        .flash-messages .alert {
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .alert-danger { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        .alert-warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <p>Already have an account? <a href="{{ url_for('login') }}">Sign in →</a></p>
+        </header>
+
+        <h1>Confirm your email address</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endwith %}
+
+        <p class="subtitle">We have sent a code to</p>
+        <p class="email-display">{{ email }}</p> {# Assuming 'email' is passed from Flask #}
+
+        <form method="POST" action="{{ url_for('confirm_otp_page') }}" id="otpForm">
+            <label for="otp-1" class="otp-label">Enter code</label>
+            <div class="otp-inputs" id="otpInputsContainer">
+                <input type="number" name="otp-1" id="otp-1" maxlength="1" pattern="[0-9]" required>
+                <input type="number" name="otp-2" id="otp-2" maxlength="1" pattern="[0-9]" required>
+                <input type="number" name="otp-3" id="otp-3" maxlength="1" pattern="[0-9]" required>
+                <input type="number" name="otp-4" id="otp-4" maxlength="1" pattern="[0-9]" required>
+                <input type="number" name="otp-5" id="otp-5" maxlength="1" pattern="[0-9]" required>
+                <input type="number" name="otp-6" id="otp-6" maxlength="1" pattern="[0-9]" required>
+            </div>
+            {# Hidden input to store the combined OTP #}
+            <input type="hidden" name="otp_code" id="otp_code_hidden">
+            <button type="submit" class="continue-btn">Continue</button>
+        </form>
+
+        <div class="links-footer">
+            Didn't get your email? 
+            <form method="POST" action="{{ url_for('resend_otp') }}" style="display: inline;">
+                <button type="submit" class="link-style">Resend the code</button>
+            </form>
+            or <a href="{{ url_for('update_email_address_page') }}">update your email address</a>.
+            {# Note: 'update_email_address_page' needs to be created #}
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const otpInputsContainer = document.getElementById('otpInputsContainer');
+    const inputs = Array.from(otpInputsContainer.getElementsByTagName('input'));
+    const otpForm = document.getElementById('otpForm');
+    const hiddenOtpInput = document.getElementById('otp_code_hidden');
+
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', (e) => {
+            // Allow only one digit
+            if (input.value.length > 1) {
+                input.value = input.value.slice(0, 1);
+            }
+            // If a digit is entered and it's not the last input, focus next
+            if (input.value && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            }
+        });
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace') {
+                // If backspace is pressed and current input is empty, focus previous
+                if (!input.value && index > 0) {
+                    inputs[index - 1].focus();
+                }
+                // If backspace is pressed and current input has value, it will clear it.
+                // Then, if it becomes empty and not the first input, focus previous on next keyup/input.
+            } else if (e.key === 'ArrowLeft' && index > 0) {
+                inputs[index - 1].focus();
+                e.preventDefault();
+            } else if (e.key === 'ArrowRight' && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+                e.preventDefault();
+            } else if (!/^[0-9]$/.test(e.key) && e.key.length === 1 && !e.ctrlKey && !e.metaKey && e.key !== 'Backspace' && e.key !== 'Delete' && !e.key.startsWith('Arrow')) {
+                // Prevent non-numeric input for keys that aren't navigation/deletion
+                e.preventDefault();
+            }
+        });
+
+        // Handle pasting OTP
+        input.addEventListener('paste', (e) => {
+            e.preventDefault();
+            const pasteData = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, ''); // Get only digits
+            if (pasteData) {
+                let currentInput = index;
+                for (let i = 0; i < pasteData.length && currentInput < inputs.length; i++) {
+                    inputs[currentInput].value = pasteData[i];
+                    if (currentInput < inputs.length - 1) {
+                        inputs[currentInput + 1].focus();
+                    }
+                    currentInput++;
+                }
+                 // If paste filled all, try to submit or focus last
+                if (inputs.every(inp => inp.value)) {
+                    // Optionally auto-submit: otpForm.requestSubmit();
+                    inputs[inputs.length - 1].focus();
+                }
+            }
+        });
+    });
+
+    otpForm.addEventListener('submit', () => {
+        let combinedOtp = "";
+        inputs.forEach(input => {
+            combinedOtp += input.value;
+        });
+        hiddenOtpInput.value = combinedOtp;
+    });
+
+    // Auto-focus the first input on page load
+    if (inputs.length > 0) {
+        inputs[0].focus();
+    }
+});
+</script>
+</body>
+</html>
