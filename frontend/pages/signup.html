@@ -5,139 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign up - IntelLaw</title>
     <style>
+        /* All of your existing CSS is perfect. No changes needed. */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-            background: linear-gradient(to bottom right, #000000, #434343, #f5f5f5);
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            background-color: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-            width: 100%;
-            max-width: 380px;
-            box-sizing: border-box;
-            backdrop-filter: blur(3px);
-            -webkit-backdrop-filter: blur(3px);
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .header h1 {
-            font-size: 24px;
-            font-weight: 600;
-            color: #111827;
-            margin: 0;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #1f2937;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 16px;
-            background-color: #ffffff;
-            color: #111827;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: #374151; /* Dark gray focus border */
-            box-shadow: 0 0 0 3px rgba(55, 65, 81, 0.2); /* Dark gray focus ring */
-        }
-
-        .submit-btn {
-            width: 100%;
-            background-color: #111827; /* Black button */
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            transition: background-color 0.2s ease-in-out;
-        }
-
-        .submit-btn:hover {
-            background-color: #374151; /* Darker gray on hover */
-        }
-        
-        .flash-message{padding:10px;border-radius:6px;text-align:center;margin-bottom:20px;font-size:14px}
-        .flash-message.error{color:#b91c1c;background-color:#fee2e2;border:1px solid #fca5a5}
-        .flash-message.success{color:#047857;background-color:#d1fae5;border:1px solid #a7f3d0}
-        .flash-message.info{color:#1e40af;background-color:#eff6ff;border:1px solid #bfdbfe}
-
-
-        .footer-text {
-            text-align: center;
-            margin-top: 24px;
-            font-size: 14px;
-            color: #4b5563;
-        }
-
-        .footer-text a {
-            color: #1f2937; /* Dark gray link */
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .footer-text a:hover {
-            text-decoration: underline;
-            color: #000000;
-        }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(to bottom right, #000000, #434343, #f5f5f5); background-size: cover; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .container { background-color: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: 12px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); width: 100%; max-width: 380px; box-sizing: border-box; backdrop-filter: blur(3px); }
+        .header { text-align: center; margin-bottom: 32px; }
+        .header h1 { font-size: 24px; font-weight: 600; color: #111827; margin: 0; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; color: #1f2937; font-size: 14px; font-weight: 500; }
+        .input-group input { width: 100%; padding: 12px 16px; border: 1px solid #d1d5db; border-radius: 8px; box-sizing: border-box; font-size: 16px; }
+        .input-group input:focus { outline: none; border-color: #374151; box-shadow: 0 0 0 3px rgba(55, 65, 81, 0.2); }
+        .submit-btn { width: 100%; background-color: #111827; color: white; padding: 12px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 500; transition: background-color 0.2s ease-in-out; }
+        .submit-btn:hover { background-color: #374151; }
+        .footer-text { text-align: center; margin-top: 24px; font-size: 14px; color: #4b5563; }
+        .footer-text a { color: #1f2937; text-decoration: none; font-weight: 500; }
+        .footer-text a:hover { text-decoration: underline; color: #000000; }
+        .flash-message { padding:10px; border-radius:6px; text-align:center; margin-bottom:20px; font-size:14px }
+        .flash-message.error { color:#b91c1c; background-color:#fee2e2; border:1px solid #fca5a5 }
     </style>
 </head>
 <body>
-    <div class="container"> 
+    <div class="container">
         <div class="header">
             <h1>Create Account</h1>
         </div>
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                {% for category, message in messages %}
-                    <p class="flash-message {{ category }}">{{ message }}</p>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+        <!-- This div will be used by JavaScript to display messages -->
+        <div id="message-container"></div>
 
-        <form method="POST" action="{{ url_for('signup') }}">
+        <!-- The form now has an ID and no Flask-specific code -->
+        <form id="signup-form">
             <div class="input-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="Enter Your Email" value="{{ email or '' }}" required>
+                <input type="email" id="email" name="email" placeholder="Enter Your Email" required>
             </div>
             <div class="input-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Create a Password" required>
+                <input type="password" id="password" name="password" placeholder="Create a Password" required minlength="6">
             </div>
             <div class="input-group">
                 <label for="confirm_password">Confirm Password</label>
@@ -146,9 +50,73 @@
             <button type="submit" class="submit-btn">Sign Up</button>
         </form>
 
+        <!-- The link is now a direct HTML link -->
         <div class="footer-text">
-            Already have an account? <a href="{{ url_for('login') }}">Sign in</a>
+            Already have an account? <a href="login.html">Sign in</a>
         </div>
     </div>
+
+    <!-- The JavaScript to power this page -->
+    <script>
+        const API_BASE_URL = 'http://127.0.0.1:5000';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('signup-form');
+            const messageContainer = document.getElementById('message-container');
+
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                messageContainer.textContent = ''; // Clear previous messages
+
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm_password').value;
+
+                // --- Frontend Validation ---
+                if (password !== confirmPassword) {
+                    messageContainer.textContent = 'Passwords do not match.';
+                    messageContainer.className = 'flash-message error';
+                    return;
+                }
+                if (password.length < 6) {
+                    messageContainer.textContent = 'Password must be at least 6 characters long.';
+                    messageContainer.className = 'flash-message error';
+                    return;
+                }
+
+                // --- Send data to the backend API ---
+                try {
+                    const response = await fetch(`${API_BASE_URL}/api/auth/signup`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email: email, password: password }),
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok && result.success) {
+                        // The backend successfully created the user.
+                        // Now we redirect to the OTP page.
+                        alert(result.message); // Show the success message from the server
+                        
+                        // Store the email in sessionStorage so the OTP page knows which user to verify
+                        sessionStorage.setItem('otp_confirm_email', email);
+                        
+                        // Redirect to the OTP confirmation page
+                        window.location.href = 'confirm_otp_form.html'; // Make sure your OTP file is named this
+                    } else {
+                        // The server responded with an error (e.g., email already exists)
+                        messageContainer.textContent = result.message;
+                        messageContainer.className = 'flash-message error';
+                    }
+
+                } catch (error) {
+                    console.error('Signup request failed:', error);
+                    messageContainer.textContent = 'Could not connect to the server. Please try again later.';
+                    messageContainer.className = 'flash-message error';
+                }
+            });
+        });
+    </script>
 </body>
 </html>

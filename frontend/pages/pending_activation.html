@@ -5,85 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Pending - IntelLaw</title>
     <style>
+        /* All of your existing CSS is perfect. No changes needed. */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-            background: linear-gradient(to bottom right, #0a0a0a, #333333, #e0e0e0); /* Slightly adjusted gradient */
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-            padding: 20px;
-        }
-        .container {
-            background-color: rgba(255, 255, 255, 0.97); /* Almost opaque white */
-            padding: 40px 50px;
-            border-radius: 12px;
-            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-            width: 100%;
-            backdrop-filter: blur(2px);
-             -webkit-backdrop-filter: blur(2px);
-        }
-        h1 {
-            font-size: 26px; /* Adjusted */
-            font-weight: 600;
-            color: #111827;
-            margin-bottom: 16px;
-        }
-        h2 {
-            font-size: 18px; /* Adjusted */
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 24px;
-        }
-        p {
-            font-size: 15px; /* Adjusted */
-            color: #4b5563;
-            line-height: 1.6;
-            margin-bottom: 32px;
-        }
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            align-items: center;
-        }
-        .btn {
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 500;
-            text-decoration: none;
-            cursor: pointer;
-            transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
-            min-width: 180px;
-            border: 1px solid transparent;
-        }
-        .btn-primary { /* "Check Again" button */
-            background-color: #374151; /* Dark Gray */
-            color: #ffffff;
-            border-color: #374151;
-        }
-        .btn-primary:hover {
-            background-color: #1f2937; /* Darker Gray */
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .btn-secondary { /* "Sign Out" button */
-            background-color: transparent;
-            color: #4b5563; /* Medium gray */
-            font-weight: 500; /* Make it a bit bolder */
-        }
-        .btn-secondary:hover {
-            color: #111827; /* Black on hover */
-            text-decoration: underline;
-        }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(to bottom right, #0a0a0a, #333333, #e0e0e0); background-size: cover; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; text-align: center; padding: 20px; }
+        .container { background-color: rgba(255, 255, 255, 0.97); padding: 40px 50px; border-radius: 12px; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2); max-width: 500px; width: 100%; backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+        h1 { font-size: 26px; font-weight: 600; color: #111827; margin-bottom: 16px; }
+        h2 { font-size: 18px; font-weight: 500; color: #374151; margin-bottom: 24px; }
+        p { font-size: 15px; color: #4b5563; line-height: 1.6; margin-bottom: 32px; }
+        .button-group { display: flex; flex-direction: column; gap: 16px; align-items: center; }
+        .btn { padding: 12px 24px; border-radius: 8px; font-size: 16px; font-weight: 500; text-decoration: none; cursor: pointer; transition: all 0.2s ease; min-width: 180px; border: 1px solid transparent; }
+        .btn-primary { background-color: #374151; color: #ffffff; border-color: #374151; }
+        .btn-primary:hover { background-color: #1f2937; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .btn-secondary { background-color: transparent; color: #4b5563; font-weight: 500; }
+        .btn-secondary:hover { color: #111827; text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -91,14 +25,45 @@
         <h1>Account Activation Pending</h1>
         <h2>Contact Admin for IntelLaw Access</h2>
         <p>
-            Your account status is currently pending activation. To access the WebUI,
-            please reach out to the administrator. Admins can manage user
-            statuses from the Admin Panel (future feature).
+            Your account for <strong id="pending-email-display"></strong> is currently pending activation. To access the WebUI,
+            please reach out to the administrator.
         </p>
         <div class="button-group">
-            <a href="{{ url_for('login') }}" class="btn btn-primary">Check Again</a> 
-            <a href="{{ url_for('logout') }}" class="btn btn-secondary">Sign Out</a>
+            <!-- This button will now re-attempt the login -->
+            <button id="check-again-btn" class="btn btn-primary">Try Logging In Again</button>
+            <!-- This button will sign the user out -->
+            <button id="sign-out-btn" class="btn btn-secondary">Sign Out</button>
         </div>
     </div>
+
+    <!-- The JavaScript to power this page -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const emailDisplay = document.getElementById('pending-email-display');
+            const checkAgainBtn = document.getElementById('check-again-btn');
+            const signOutBtn = document.getElementById('sign-out-btn');
+
+            // Get the email stored by the login page
+            const pendingEmail = sessionStorage.getItem('pending_email');
+            
+            if (pendingEmail) {
+                emailDisplay.textContent = pendingEmail;
+            } else {
+                emailDisplay.textContent = "your account";
+            }
+
+            // The "Check Again" button simply takes the user back to the login page
+            checkAgainBtn.addEventListener('click', () => {
+                sessionStorage.removeItem('pending_email'); // Clean up
+                window.location.href = 'login.html';
+            });
+
+            // The "Sign Out" button also goes back to the login page
+            signOutBtn.addEventListener('click', () => {
+                sessionStorage.removeItem('pending_email'); // Clean up
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
 </body>
 </html>

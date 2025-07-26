@@ -159,15 +159,6 @@
         </div>
         {% endif %}
 
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-            <div class="flash-messages">
-                {% for category, message in messages %}
-                <div class="alert alert-{{ category }}">{{ message }}</div>
-                {% endfor %}
-            </div>
-            {% endif %}
-        {% endwith %}
 
         <p class="instruction-step"><strong>Step 1:</strong> Scan the QR code below with your authenticator app (e.g., Google Authenticator, Authy, Microsoft Authenticator).</p>
         
