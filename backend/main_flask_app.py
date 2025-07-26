@@ -8,7 +8,7 @@ from itsdangerous import URLSafeTimedSerializer
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 
 # --- Import your backend logic functions ---
-from backend import (
+from .logic import (
     initialize_all_components,
     create_user,
     verify_password,
