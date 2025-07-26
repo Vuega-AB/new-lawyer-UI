@@ -27,3 +27,4 @@ itsdangerous
 pymongo
 uvicorn[standard]
 a2wsgi
+gunicorn
