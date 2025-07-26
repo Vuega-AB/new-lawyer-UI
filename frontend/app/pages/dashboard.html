@@ -1,0 +1,183 @@
+<!-- The self-contained Dashboard component -->
+<div id="dashboard-page">
+
+    <!-- 1. Component-Specific CSS (This should already be in your file) -->
+    <style>
+        /* All rules are scoped to this component to prevent style conflicts */
+        #dashboard-page .main-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        #dashboard-page .card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+        }
+        #dashboard-page .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 15px; 
+            margin-bottom: 15px;
+        }
+        #dashboard-page .card-header h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        #dashboard-page .full-width { grid-column: 1 / -1; }
+        #dashboard-page .two-thirds-width { grid-column: span 2; }
+
+        /* Add all other dashboard-specific styles here... */
+        #dashboard-page .tabs { display: flex; gap: 20px; flex-wrap: wrap; }
+        #dashboard-page .tab { font-size: 14px; cursor: pointer; padding-bottom: 17px; border-bottom: 3px solid transparent; color: #6c757d; }
+        #dashboard-page .tab.active { color: #0d6efd; border-bottom-color: #0d6efd; font-weight: 600; }
+        #dashboard-page .chart-placeholder { min-height: 250px; border: 1px solid #f0f0f0; display: flex; align-items: center; justify-content: center; border-radius: 4px; }
+        #dashboard-page .sample-view { background-color: rgba(255, 255, 255, 0.95); padding: 10px 20px; border: 1px solid #ddd; border-radius: 8px; }
+        #dashboard-page .topic-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+        #dashboard-page .tag { background-color: #e0f7fa; color: #007bff; padding: 8px 12px; border-radius: 15px; font-size: 13px; font-weight: 500; border: 1px solid #bce6f1;}
+        #dashboard-page .deadline-list, #dashboard-page .document-list { list-style: none; padding: 0; margin: 0; }
+        #dashboard-page .deadline-list li, #dashboard-page .document-list li { padding: 12px 0; border-bottom: 1px solid #f0f2f5; font-size: 14px; line-height: 1.5; }
+        #dashboard-page .deadline-list li:last-child, #dashboard-page .document-list li:last-child { border-bottom: none; }
+        #dashboard-page .deadline-list strong { font-weight: 600; margin-right: 10px; }
+        #dashboard-page .document-list span { display: block; font-size: 12px; color: #6c757d; margin-top: 4px; }
+        #dashboard-page .news-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
+        #dashboard-page .news-tab { padding: 5px 12px; border-radius: 15px; border: 1px solid #ccc; font-size: 13px; font-weight: 500; }
+        #dashboard-page .news-tab.active { background-color: #212529; color: white; border-color: #212529; }
+        #dashboard-page .recommended-searches { list-style: none; padding: 0; margin: 0; }
+        #dashboard-page .recommended-searches li { padding: 10px 0; border-bottom: 1px solid #f0f2f5; }
+        #dashboard-page .recommended-searches a { display: flex; font-weight: 500; color: #0d6efd; justify-content: space-between; align-items: center; }
+        #dashboard-page .recommended-searches a::after { content: '\2197'; font-size: 16px; }
+        #dashboard-page .main-footer { text-align: center; padding-top: 24px; }
+        #dashboard-page .contact-btn { background-color: #0d6efd; color: white; border: none; padding: 12px 30px; font-size: 16px; border-radius: 5px; cursor: pointer; }
+        #dashboard-page .user-icon-btn {
+            font-size: 28px;
+            color: #6c757d;
+            cursor: pointer;
+        }
+    </style>
+
+    <!-- 2. Component-Specific HTML -->
+    <div class="main-grid">
+        
+        <!-- Card: Activities at a Glance -->
+        <div class="card full-width">
+            <div class="card-header">
+                <h3>Activities at a Glance — last 7 days</h3>
+                <div class="tabs">
+                    <span class="tab active">ARE-MOJ</span><span class="tab">ARG-BCRA</span><span class="tab">AUS-APRA</span><span class="tab">AUS-ASIC</span><span class="tab">AUS-AUSTRAC</span><span class="tab">AUS-GOV</span>
+                </div>
+            </div>
+            <div class="card-content"><p>No updates for ARE-MOJ in the last 7 days.</p></div>
+        </div>
+
+        <!-- Card: Enforcements Actions -->
+        <div class="card two-thirds-width">
+            <div class="card-header"><h3>Enforcements Actions — last 30 days</h3><a href="#" class="see-all">See All</a></div>
+            <div class="card-content"><div class="chart-placeholder"><p class="sample-view">Sample view only. <a href="#">Learn more</a></p></div></div>
+        </div>
+
+        <!-- Card: Topic Updates -->
+        <div class="card">
+            <div class="card-header"><h3>Topic Updates — last 7 days</h3></div>
+            <div class="card-content"><p style="font-size: 13px; color: #666;">You are viewing all topics. <a href="#">Click here to see your followed topics.</a></p><div class="topic-tags"><span class="tag">BSA/AML (3)</span><span class="tag">Blockchain/Crypto (3)</span><span class="tag">Broker Dealer (4)</span><span class="tag">Commercial Lending</span><span class="tag">Consumer Lending (8)</span><span class="tag">Credit</span><span class="tag">Crowdfunding (6)</span><span class="tag">Cybersecurity</span><span class="tag">Leasing (3)</span></div></div>
+        </div>
+
+        <!-- Card: Approaching Deadlines -->
+        <div class="card full-width">
+            <div class="card-header"><h3>Approaching Deadlines — next 7 days</h3><a href="#" class="see-all">See All</a></div>
+            <div class="card-content">
+                <ul class="deadline-list">
+                    <li><strong>Jun 26 Effective Date</strong> Listing of Color Additives Exempt From Certificati... Rule | FDA</li>
+                    <li><strong>Jun 26 Effective Date</strong> Listing of Color Additives Exempt From Certificati... Rule | FDA</li>
+                    <li><strong>Jun 24 Effective Date</strong> R592-5, Title Insurance Product or Service Approv... Proposed Rule | UT-ID</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Card: Whitepapers -->
+        <div class="card">
+            <div class="card-header"><h3>Whitepapers</h3><a href="#" class="see-all">See All</a></div>
+            <div class="card-content">
+                <ul class="document-list">
+                    <li>'Smart' Products: ICO publishes guidance<span>Publication Date: 23/06/2025</span></li>
+                    <li>How to use AI in Ads: the ASA issues advice<span>Publication Date: 23/06/2025</span></li>
+                    <li>Digital Fairness Act Series - Topic 3: Personalized Advertising and Pricing<span>Publication Date: 24/06/2025</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Card: Industry News -->
+        <div class="card">
+            <div class="card-header"><h3>Industry News</h3><a href="#" class="see-all">See All</a></div>
+            <div class="card-content">
+                <div class="news-tabs"><span class="news-tab active">All news</span><span class="news-tab">Agency News</span><span class="news-tab">Mainstream News</span></div>
+                <ul class="document-list">
+                    <li>Language question: The correct use of the grammatical gender noun person<span>24/06/2025 Source: CAN-OCOLF</span></li>
+                    <li>Vaccine pact, Newsletter<span>24/06/2025 Source:</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Card: California Consumer Privacy Act -->
+        <div class="card">
+            <div class="card-header"><h3>California Consumer Privacy Act (CC... — last 7 days</h3><a href="#" class="see-all">See All</a></div>
+            <div class="card-content">
+                <ul class="document-list">
+                    <li>Attorney General Bonta, Consortium of Privacy Regulators Strongly Opp...<span>Publication Date: Sunday, June 22nd, 2025 | Press Release | CA-OAG</span></li>
+                    <li>IP Due Diligence for AI Investors and Acquirers<span>Publication Date: Sunday, June 22nd, 2025 | Whitepaper | Galkin.Law LLC</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Card: COVID-19 -->
+        <div class="card">
+            <div class="card-header"><h3>COVID-19 — last 7 days</h3><a href="#" class="see-all">See All</a></div>
+            <div class="card-content">
+                <ul class="document-list">
+                    <li>Air Plan Approval; California; San Joaquin Valley; 1-Hour Ozone Area; Mai...<span>Publication Date: Monday, June 23rd, 2025 | Proposed Rule | EPA</span></li>
+                    <li>Volunteering and charitable giving in Canada, 2018 to 2023<span>Publication Date: Monday, June 23rd, 2025 | News | CAN-SC</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Card: Regulation -->
+        <div class="card">
+            <div class="card-header"><h3>Regulation — last 7 days</h3><a href="#" class="see-all">See All</a></div>
+            <div class="card-content">
+                <ul class="document-list">
+                    <li>Agency Information Collection Activities; Proposals, Submissions, and A...<span>Publication Date: Monday, June 23rd, 2025 | Notice | SEC | Securities</span></li>
+                    <li>All Items Consumer Price Index for All Urban Consumers: United States C...<span>Publication Date: Monday, June 23rd, 2025 | Notice | DOL</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Card: Recommended Searches -->
+        <div class="card">
+            <div class="card-header"><h3>Recommended Searches</h3></div>
+            <div class="card-content">
+                <ul class="recommended-searches">
+                    <li><a href="#">GDPR news and updates</a></li>
+                    <li><a href="#">BSA/AML Enforcement Actions</a></li>
+                    <li><a href="#">Cybersecurity-related Whitepapers</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Page Footer -->
+    <footer class="page-footer">
+        <div style="flex-grow: 1;"></div> <!-- Spacer -->
+        <button class="contact-btn">Contact Us</button>
+        <div style="flex-grow: 1; text-align: right;">
+             <i class="fas fa-user-circle user-icon-btn"></i>
+        </div>
+    </footer>
+
+</div>

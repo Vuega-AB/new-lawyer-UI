@@ -1,7 +1,7 @@
 
 const currentUser = localStorage.getItem('currentUserEmail');
 if (!currentUser) {
-    window.location.href = 'pages/login.html';
+    window.location.href = 'auth/pages/login.html';
 } else {
     console.log(`Welcome, ${currentUser}! Loading main application...`);
 }
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (logoutButton) {
         logoutButton.addEventListener('click', () => {
             localStorage.removeItem('currentUserEmail');
-            window.location.href = 'pages/login.html';
+            window.location.href = 'auth/pages/login.html';
         });
     }
 });

@@ -31,8 +31,9 @@ from backend import (
 mail = Mail()
 ts_password_reset = None # We will create this inside the factory
 FRONTEND_EMAIL_TEMPLATE_PATH = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..', 'frontend', 'pages', 'email')
+    os.path.join(os.path.dirname(__file__), '..', 'frontend', 'auth', 'pages', 'email')
 )
+
 # ===================================================================
 # ||                THE APPLICATION FACTORY                        ||
 # ===================================================================
@@ -220,7 +221,7 @@ def create_app():
         if user:
             try:
                 token = ts_password_reset.dumps(email, salt='password-reset-salt')
-                reset_url = f"http://localhost:8001/pages/reset_password_form.html?token={token}"
+                reset_url = f"http://localhost:8001/auth/pages/reset_password_form.html?token={token}"
                 
                 print(f"PASSWORD RESET LINK for {email}: {reset_url}") # For testing
 

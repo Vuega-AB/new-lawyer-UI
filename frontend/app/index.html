@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <style>
+        :root {
+            --sidebar-width: 80px;
+            --primary-blue: #0d6efd;
+            --sidebar-bg: #1a1a1a;
+            --page-bg: #f0f2f5;
+            --border-color: #dee2e6;
+            --text-color: #212529;
+            --text-muted: #6c757d;
+        }
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--page-bg);
+            color: var(--text-color);
+        }
+        .sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--sidebar-bg);
+            position: fixed; 
+            top: 0;
+            left: 0;
+            height: 100vh; 
+            z-index: 1000; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav .nav-link {
+            color: #a0a0a0;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 0;
+            width: var(--sidebar-width);
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .sidebar-nav .nav-link i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-nav .nav-link:hover,
+        .sidebar-nav .nav-link.active-link {
+            background-color: var(--primary-blue);
+            color: #ffffff;
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width); 
+            padding: 24px;
+            height: 100%;
+        }
+        .page-content {
+            display: none; 
+        }
+
+        .page-content.active {
+            display: block; 
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px; margin-bottom: 15px;
+        }
+        .card-header h3 { margin: 0; font-size: 16px; }
+        .full-width { grid-column: 1 / -1; }
+        .two-thirds-width { grid-column: span 2; }
+        .chart-placeholder { height: 200px; border: 1px dashed #ccc; display:flex; align-items:center; justify-content:center; }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        .btn { border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        .btn-primary { background-color: #4a5568; color: #fff; }
+        .filter-container { background-color: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 0 24px 24px; }
+        .filter-tabs { display: flex; border-bottom: 1px solid var(--border-color); }
+        .filter-tab { padding: 16px 20px; cursor: pointer; font-size: 16px; color: var(--text-muted); border-bottom: 3px solid transparent; margin-bottom: -1px; }
+        .filter-tab.active { color: var(--primary-blue); border-bottom-color: var(--primary-blue); }
+        .tab-content { padding-top: 24px; }
+        .filter-section h2 { font-size: 18px; margin-bottom: 8px; }
+        .filter-section p { font-size: 14px; color: var(--text-muted); }
+        .section-controls { margin: 16px 0; }
+        .section-controls a { color: var(--primary-blue); text-decoration: none; margin-right: 16px; }
+        .pills-grid { display: flex; flex-wrap: wrap; gap: 12px; }
+        .pill { display: inline-flex; border-radius: 20px; padding: 8px 16px; font-size: 14px; border: 1px solid var(--border-color); }
+        .pill-topic { background-color: var(--primary-blue); color: #fff; border-color: var(--primary-blue); }
+        .pill-concept { background-color: #fff; color: var(--text-color); }
+        .pill-concept .plus-icon { margin-left: 12px; }
+        .page-footer { margin-top: 24px; display: flex; justify-content: space-between; align-items: center; }
+        .contact-btn { background-color: #007bff; color: white; padding: 10px 24px; border-radius: 5px; border:none; }
+        
+    </style>
+</head>
+<body>
+
+    <!-- Your HTML body remains exactly the same -->
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a class="nav-link" data-page="default_filter"><i class="fas fa-sliders-h"></i><span>Default Filter</span></a></li>
+                    <li><a class="nav-link active-link" data-page="dashboard"><i class="fas fa-th-large"></i><span>Dashboard</span></a></li>
+                    <li><a class="nav-link" data-page="timeline"><i class="fas fa-stream"></i><span>Timeline</span></a></li>
+                    <li><a class="nav-link" data-page="enforcement"><i class="fas fa-gavel"></i><span>Enforcement</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div id="dashboard" class="page-content active"></div>
+            <div id="default_filter" class="page-content"></div>
+            <div id="timeline" class="page-content"></div>
+            <div id="enforcement" class="page-content"></div>
+        </main>
+    </div>
+
+    <!-- REPLACE YOUR OLD SCRIPT WITH THIS NEW ONE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page-content');
+            
+            // --- Function to fetch and load page content ---
+            async function loadPage(pageId) {
+                const targetDiv = document.getElementById(pageId);
+                
+                // If the div is empty, fetch the content. Otherwise, do nothing.
+                // This prevents reloading content you already have.
+                if (targetDiv && targetDiv.innerHTML.trim() === '') {
+                    try {
+                        // Construct the path to the HTML component
+                        const response = await fetch(`pages/${pageId}.html`);
+                        if (!response.ok) {
+                            throw new Error(`Could not load page: ${response.status}`);
+                        }
+                        const content = await response.text();
+                        targetDiv.innerHTML = content;
+                    } catch (error) {
+                        console.error("Failed to load page: ", error);
+                        targetDiv.innerHTML = `<p style="color:red; text-align:center;">Failed to load content.</p>`;
+                    }
+                }
+            }
+            
+            // --- Function to handle showing the correct page ---
+            function showPage(pageId) {
+                // Hide all pages
+                pages.forEach(page => page.classList.remove('active'));
+                
+                // Show the target page
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                }
+                
+                // Update the active link in the sidebar
+                navLinks.forEach(link => {
+                    link.classList.toggle('active-link', link.dataset.page === pageId);
+                });
+            }
+
+            // --- Add click event listeners to sidebar links ---
+            navLinks.forEach(link => {
+                link.addEventListener('click', async function (event) {
+                    event.preventDefault();
+                    const pageId = this.dataset.page;
+                    
+                    // Load the content (if it's not already loaded)
+                    await loadPage(pageId);
+                    
+                    // Show the page
+                    showPage(pageId);
+                });
+            });
+            
+            // --- Load and show the default page on initial visit ---
+            const initialPageId = document.querySelector('.nav-link.active-link').dataset.page;
+            loadPage(initialPageId); // Load the content for the default page
+            
+        });
+    </script>
+
+</body>
+</html>

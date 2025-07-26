@@ -1,0 +1,274 @@
+<!-- The self-contained Default Filter component -->
+<div id="filter-page">
+
+    <!-- 1. Component-Specific CSS -->
+    <style>
+        /* All rules are scoped to this component to prevent style conflicts */
+        #filter-page {
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Make the container fill the space */
+        }
+        
+        #filter-page .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        #filter-page .btn-save { 
+            border: none;
+            padding: 10px 20px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 14px; 
+            font-weight: 500;
+            background-color: #4a5568; 
+            color: #fff;
+        }
+        #filter-page .btn-save:hover {
+            background-color: #2d3748;
+        }
+
+        #filter-page .filter-container { 
+            background-color: #fff; 
+            border: 1px solid #dee2e6; 
+            border-radius: 8px; 
+            padding: 0 24px 24px; 
+            flex-grow: 1; /* Allow container to grow */
+        }
+
+        #filter-page .filter-tabs { 
+            display: flex; 
+            border-bottom: 1px solid #dee2e6; 
+        }
+
+        #filter-page .filter-tab { 
+            padding: 16px 4px;
+            margin-right: 20px;
+            cursor: pointer; 
+            font-size: 16px; 
+            color: #6c757d; 
+            border-bottom: 3px solid transparent; 
+            margin-bottom: -1px; 
+            font-weight: 500;
+        }
+
+        #filter-page .filter-tab.active { 
+            color: #0d6efd; 
+            border-bottom-color: #0d6efd; 
+        }
+
+        #filter-page .tab-content { 
+            padding-top: 24px; 
+        }
+        #filter-page .filter-section {
+            margin-bottom: 32px;
+        }
+        #filter-page .filter-section h2 { 
+            font-size: 18px; 
+            margin-top: 0;
+            margin-bottom: 8px; 
+        }
+        #filter-page .filter-section p { 
+            font-size: 14px; 
+            color: #6c757d; 
+            line-height: 1.5;
+            max-width: 800px;
+        }
+        #filter-page .section-controls { 
+            margin-bottom: 16px; 
+        }
+        #filter-page .section-controls a { 
+            color: #0d6efd; 
+            text-decoration: none; 
+            font-size: 14px; 
+            font-weight: 500; 
+            margin-right: 16px; 
+        }
+
+        #filter-page .pills-grid { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 12px; 
+        }
+        #filter-page .pill { 
+            display: inline-flex; 
+            align-items: center;
+            border-radius: 20px; /* More rounded pills */
+            padding: 8px 16px; 
+            font-size: 14px; 
+            font-weight: 500; 
+            cursor: pointer; 
+            transition: all 0.2s ease-in-out;
+            border: 1px solid transparent;
+        }
+
+        /* Blue, filled topic pills */
+        #filter-page .pill-topic { 
+            background-color: #0d6efd; 
+            color: #ffffff; 
+        }
+        #filter-page .pill-topic:hover {
+            background-color: #0b5ed7;
+        }
+
+        /* White, outlined concept pills */
+        #filter-page .pill-concept { 
+            background-color: #fff;
+            color: #212529;
+            border: 1px solid #ced4da;
+        }
+        #filter-page .pill-concept:hover {
+            border-color: #0d6efd;
+            color: #0d6efd;
+        }
+        #filter-page .pill-concept .plus-icon { 
+            margin-left: 12px; 
+            font-weight: bold; 
+            color: #6c757d;
+        }
+        #filter-page .pill-concept:hover .plus-icon {
+             color: #0d6efd;
+        }
+        
+        /* Tooltip Container & Styles */
+        #filter-page .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+        #filter-page .tooltip-container .tooltip-text {
+            visibility: hidden;
+            width: 220px;
+            background-color: #2d3748;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -110px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 13px;
+        }
+        #filter-page .tooltip-container .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%; left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #2d3748 transparent transparent transparent;
+        }
+        #filter-page .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        #filter-page .page-footer { 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 24px; 
+            margin-top: auto; /* Push to bottom if content is short */
+        }
+        #filter-page .contact-btn { background-color: #0d6efd; color: white; border: none; padding: 12px 30px; font-size: 16px; border-radius: 5px; cursor: pointer; }
+        #filter-page .user-icon-btn {
+            font-size: 28px;
+            color: #6c757d;
+            cursor: pointer;
+        }
+
+    </style>
+
+    <!-- 2. Component-Specific HTML -->
+    <header class="page-header">
+        <div class="header-left">
+             <button class="btn-save">Save changes for future sessions</button>
+        </div>
+    </header>
+
+    <div class="filter-container">
+        <nav class="filter-tabs">
+            <div class="filter-tab active">Topics</div>
+            <div class="filter-tab">Regulatory Sources</div>
+            <div class="filter-tab">News & Premium Content</div>
+            <div class="filter-tab">Document Types</div>
+        </nav>
+        <div class="tab-content">
+            <section class="filter-section">
+                <p>Topics are a combination of Expert-in-the-Loop and Machine Learning assessments for financial services related content that comes into our system. Select relevant topics to receive a personalized weekly email update. Your selections will also inform...</p>
+                <div class="section-controls"><a href="#">Select All</a><a href="#">Clear All</a></div>
+                <div class="pills-grid">
+                    <button class="pill pill-topic">Blockchain/Crypto</button>
+                    <button class="pill pill-topic">Broker Dealer</button>
+                    <button class="pill pill-topic">BSA/AML</button>
+                    <button class="pill pill-topic">Commercial Lending</button>
+                    <button class="pill pill-topic">Consumer Lending</button>
+                    <button class="pill pill-topic">Crowdfunding</button>
+                    <button class="pill pill-topic">Cybersecurity</button>
+                    <button class="pill pill-topic">Debt Collection</button>
+                    <button class="pill pill-topic">Deposits</button>
+                    <button class="pill pill-topic">FCPA/ABAC</button>
+                    <button class="pill pill-topic">Insurance</button>
+                    <button class="pill pill-topic">Leasing</button>
+                    <div class="tooltip-container">
+                        <button class="pill pill-topic">Lending</button>
+                        <span class="tooltip-text">Loans used to purchase property.</span>
+                    </div>
+                    <button class="pill pill-topic">Mortgage Lending</button>
+                    <button class="pill pill-topic">Payday Lending</button>
+                    <button class="pill pill-topic">Payments</button>
+                    <button class="pill pill-topic">Privacy</button>
+                    <button class="pill pill-topic">Securities</button>
+                    <button class="pill pill-topic">Trusts</button>
+                </div>
+            </section>
+            <section class="filter-section">
+                <h2>Concepts</h2>
+                <p>Concepts are custom searches available for your organization.</p>
+                <div class="section-controls"><a href="#">Select All</a><a href="#">Clear All</a></div>
+                <div class="pills-grid">
+                    <button class="pill pill-concept">Asset Management 0/35 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Broker/Dealer 0/3 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">BSA/AML 0/50 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Corporate Banking 0/8 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Corporate Compliance 0/31 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">COVID-19 0/4 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Credit Card 0/5 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Cybersecurity 0/8 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Debt Collection 0/2 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Deposits 0/6 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Employment 0/10 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Energy 0/10 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">FinTech 0/6 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Healthcare 0/5 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Housing 0/7 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Insurance 0/28 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Insurance - Rating 0/1 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Investment Advisor 0/8 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Lending 0/16 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Licensing 0/8 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Mortgage Lending 0/16 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Operational 0/26 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Privacy 0/22 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Securities 0/7 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Tax 0/2 <span class="plus-icon">+</span></button>
+                    <button class="pill pill-concept">Trusts 0/3 <span class="plus-icon">+</span></button>
+                </div>
+                <div class="section-controls" style="margin-top: 20px;"><a href="#">Request More Info</a></div>
+            </section>
+        </div>
+    </div>
+    <footer class="page-footer">
+        <div style="flex-grow: 1;"></div> <!-- Spacer -->
+        <button class="contact-btn">Contact Us</button>
+        <div style="flex-grow: 1; text-align: right;">
+             <i class="fas fa-user-circle user-icon-btn"></i>
+        </div>
+    </footer>
+
+</div>
