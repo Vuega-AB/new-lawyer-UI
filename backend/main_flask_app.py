@@ -183,8 +183,8 @@ def create_app():
     
     def send_system_email(to_email, subject, template_name_no_ext, **kwargs):
         try:
-            html_template_path = os.path.join(FRONTEND_EMAIL_TEMPLATE_PATH, f"{template_name_no_ext}.html")
-            text_template_path = os.path.join(FRONTEND_EMAIL_TEMPLATE_PATH, f"{template_name_no_ext}.txt")
+            html_template_path = os.path.join(EMAIL_TEMPLATE_PATH, f"{template_name_no_ext}.html")
+            text_template_path = os.path.join(EMAIL_TEMPLATE_PATH, f"{template_name_no_ext}.txt")
 
             # Read the entire content of the template files
             with open(html_template_path, 'r', encoding='utf-8') as f:
