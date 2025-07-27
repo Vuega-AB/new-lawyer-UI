@@ -30,10 +30,9 @@ from .logic import (
 # configure them yet. They are empty shells.
 mail = Mail()
 ts_password_reset = None # We will create this inside the factory
-FRONTEND_EMAIL_TEMPLATE_PATH = os.path.abspath(
-    os.path.join(os.path.dirname(__file__), '..', 'frontend', 'auth', 'pages', 'email')
+EMAIL_TEMPLATE_PATH = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), 'templates', 'email')
 )
-
 # ===================================================================
 # ||                THE APPLICATION FACTORY                        ||
 # ===================================================================
@@ -43,7 +42,9 @@ def create_app():
     This is the standard, correct pattern.
     """
     app = Flask(__name__)
-    CORS(app)
+    #CORS(app)
+    frontend_url = os.getenv('FRONTEND_URL', 'http://127.0.0.1:8001') # Default for local dev
+    CORS(app, resources={r"/api/*": {"origins": frontend_url}})
 
     app.config['SECRET_KEY'] = os.getenv("FLASK_SECRET_KEY", "a-very-strong-secret-key-for-dev-only")
     app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')
@@ -221,8 +222,7 @@ def create_app():
         if user:
             try:
                 token = ts_password_reset.dumps(email, salt='password-reset-salt')
-                reset_url = f"http://localhost:8001/auth/pages/reset_password_form.html?token={token}"
-                
+                reset_url = f"{frontend_url}/auth/pages/reset_password_form.html?token={token}"                
                 print(f"PASSWORD RESET LINK for {email}: {reset_url}") # For testing
 
                 # This call now works correctly with the refactored function
