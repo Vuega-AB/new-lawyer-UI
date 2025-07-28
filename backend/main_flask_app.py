@@ -8,7 +8,7 @@ from itsdangerous import URLSafeTimedSerializer
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadTimeSignature
 
 # --- Import your backend logic functions ---
-from logic import (
+from .logic import (
     initialize_all_components,
     create_user,
     verify_password,
@@ -35,11 +35,16 @@ EMAIL_TEMPLATE_PATH = os.path.abspath(
 # ===================================================================
 # ||                THE APPLICATION FACTORY                        ||
 # ===================================================================
+
+_is_initialized = False
+
 def create_app():
     """
     This function creates and configures the Flask application.
     This is the standard, correct pattern.
     """
+    global _is_initialized
+
     app = Flask(__name__)
     #CORS(app)
     frontend_url = os.getenv('FRONTEND_URL', 'http://127.0.0.1:8001') # Default for local dev
@@ -53,6 +58,12 @@ def create_app():
     app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
     app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER')
     mail.init_app(app)
+
+    if not _is_initialized:
+        print("--- RENDER STARTUP: Initializing all backend components... ---")
+        initialize_all_components()
+        print("--- RENDER STARTUP: Backend initialization complete. ---")
+        _is_initialized = True
 
     global ts_password_reset
     ts_password_reset = URLSafeTimedSerializer(app.config['SECRET_KEY'])
@@ -280,7 +291,6 @@ def create_app():
 # ===================================================================
 if __name__ == "__main__":
     app = create_app()
-    initialize_all_components()
     
     print("--- Python API Backend is RUNNING and listening on http://127.0.0.1:5000 ---")
     app.run(host="0.0.0.0", port=5000, debug=True)
