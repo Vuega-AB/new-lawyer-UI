@@ -1,25 +1,31 @@
-# --- Web Framework and Server ---
-Flask
-gunicorn
-Flask-Cors
-
-# --- Authentication and Email ---
-Flask-Mail
+flask
+gradio
+uvicorn
+fastapi
+dnspython
+dropbox
+sentence-transformers
+faiss-cpu
+torch
+torchvision
+torchaudio
+google-generativeai
+openai
+together
+python-dotenv
 bcrypt
 pyotp
-itsdangerous
-qrcode
-
-# --- Database Drivers ---
-pymongo
-dnspython
-
-# --- Utilities ---
-python-dotenv
 requests
 beautifulsoup4
-pypdf2
-langdetect
 aiohttp
 httpx
+pypdf2
+langdetect
+flask_mail
+qrcode
+itsdangerous
+pymongo
+uvicorn[standard]
 a2wsgi
+gunicorn
+Flask-Cors
