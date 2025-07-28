@@ -1,5 +1,227 @@
-<!-- Content for pages/timeline.html -->
-<div class="card">
-    <h1>Timeline</h1>
-    <p>Content for the Timeline page will go here.</p>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    margin: 0;
+    background: #f5f6fa;
+    color: #212529;
+  }
+
+  .timeline-header-bar {
+    background: #fff;
+    border-bottom: 1px solid #dee2e6;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 500;
+  }
+
+  .timeline-header-bar .left {
+    font-size: 14px;
+  }
+
+  .timeline-header-bar .right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .timeline-header-bar .right button {
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    cursor: pointer;
+    color: #6c757d;
+  }
+
+  .filter-section h2 {
+    background-color: #e9efff;
+    color: #0d6efd;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    border-top: 1px solid #d0d7e4;
+    border-bottom: 1px solid #d0d7e4;
+  }
+
+  .card {
+    background-color: #fff;
+    border-bottom: 1px solid #dee2e6;
+    padding: 16px 24px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .card input[type="checkbox"] {
+    margin-top: 5px;
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+
+  .card-content {
+    flex: 1;
+  }
+
+  .card-header h3 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #0d6efd;
+    margin: 0 0 8px;
+  }
+
+  .card p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.4;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 4px 10px;
+    background-color: #0d6efd;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 12px;
+    margin-top: 6px;
+  }
+
+  .page-footer {
+    margin: 24px 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 24px;
+    font-size: 14px;
+    color: #6c757d;
+    font-weight: 500;
+  }
+
+  .btn {
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .btn:hover {
+    background-color: #dee2e6;
+  }
+
+  .btn-primary {
+    background-color: #0d6efd;
+    color: #fff;
+  }
+
+  .fixed-contact {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background: #0d6efd;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    z-index: 1000;
+  }
+</style>
+
+<!-- Header bar -->
+<div class="timeline-header-bar">
+  <div class="left">1107404 results • 124 - 143</div>
+  <div class="right">
+    <button title="Previous"><i class="fas fa-angle-left"></i></button>
+    <button title="Next"><i class="fas fa-angle-right"></i></button>
+    <button title="Filter"><i class="fas fa-filter"></i></button>
+    <button title="Settings"><i class="fas fa-cog"></i></button>
+  </div>
 </div>
+
+<!-- Timeline items -->
+<div class="filter-section">
+  <h2>Tuesday, June 24th, 2025</h2>
+
+  <div class="card">
+    <input type="checkbox" />
+    <div class="card-content">
+      <div class="card-header">
+        <h3>Agency Information Collection Activities: Proposed Collection Renewal; Comment Request</h3>
+      </div>
+      <p><strong>Agency:</strong> FDIC • <strong>Doc Type:</strong> Notice • <strong>Docket ID:</strong> 3064-0152</p>
+      <p><strong>Published:</strong> April 25, 2025 • <strong>Comments Close:</strong> June 24, 2025</p>
+      <span class="pill">Public Inspection</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <input type="checkbox" />
+    <div class="card-content">
+      <div class="card-header">
+        <h3>Agency Information Collection Activities: Proposed Collection; Comment Request; Extension</h3>
+      </div>
+      <p><strong>Agency:</strong> FTC • <strong>Doc Type:</strong> Notice • <strong>Docket ID:</strong> 2025-07194</p>
+      <p><strong>Published:</strong> April 25, 2025 • <strong>Comments Close:</strong> June 24, 2025</p>
+      <span class="pill">Securities</span>
+    </div>
+  </div>
+</div>
+
+<div class="filter-section">
+  <h2>Monday, June 23rd, 2025</h2>
+
+  <div class="card">
+    <input type="checkbox" />
+    <div class="card-content">
+      <div class="card-header">
+        <h3>Aufs Beste hoffen, aufs Schlimmste vorbereiten</h3>
+      </div>
+      <p><strong>Agency:</strong> DEU-BB • <strong>Doc Type:</strong> Press Release</p>
+      <p><strong>Published:</strong> June 23, 2025</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <input type="checkbox" />
+    <div class="card-content">
+      <div class="card-header">
+        <h3>Advisors Series Trust and Distribution Cognizant, LLC</h3>
+      </div>
+      <p><strong>Agency:</strong> SEC • <strong>Doc Type:</strong> Notice</p>
+      <p><strong>Published:</strong> June 23, 2025</p>
+      <span class="pill">Securities</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <input type="checkbox" />
+    <div class="card-content">
+      <div class="card-header">
+        <h3>Minister Anand: NATO and Canada-EU Summits</h3>
+      </div>
+      <p><strong>Agency:</strong> CAN-GOV • <strong>Doc Type:</strong> Press Release</p>
+      <p><strong>Published:</strong> June 23, 2025</p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="page-footer">
+  <span>Showing 124 - 143 of 1107404 results</span>
+  <div>
+    <button class="btn">Previous</button>
+    <button class="btn">Next</button>
+  </div>
+</div>
+
+<!-- Contact button -->
+<button class="fixed-contact">Contact Us</button>
+
+<!-- Font Awesome for icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
