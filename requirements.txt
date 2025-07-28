@@ -29,3 +29,4 @@ uvicorn[standard]
 a2wsgi
 gunicorn
 Flask-Cors
+dnspython
