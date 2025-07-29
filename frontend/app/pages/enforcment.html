@@ -63,8 +63,8 @@
         #enforcement-component .bar-chart {
             display: flex;
             justify-content: space-around;
-            align-items: flex-end;
-            height: 150px;
+            align-items: flex-end; /* This aligns items to the bottom axis */
+            height: 200px; /* Increased height for better proportions */
             border-bottom: 1px solid #e9ecef;
             padding-bottom: 10px;
             gap: 10px;
@@ -72,26 +72,19 @@
 
         #enforcement-component .bar-item {
             display: flex;
-            flex-direction: column-reverse; /* Puts label at bottom */
+            flex-direction: column; /* Stacks children vertically */
             align-items: center;
-            justify-content: flex-start;
+            justify-content: flex-end; /* Pushes content to the bottom */
             flex: 1; 
             text-align: center;
             height: 100%;
         }
 
-        #enforcement-component .bar-label {
-            margin-bottom: 8px;
-            font-size: 13px;
-            color: #6c757d;
-            font-weight: 500;
-        }
-        
         #enforcement-component .bar-value {
-            margin-bottom: 8px;
              font-size: 12px;
              font-weight: 600;
              color: #343a40;
+             margin-bottom: 4px; /* Space between value and bar */
         }
         
         #enforcement-component .bar {
@@ -99,6 +92,18 @@
             max-width: 40px;
             background-color: #5b99e5;
             border-radius: 3px 3px 0 0;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        #enforcement-component .bar:hover {
+            background-color: #0d6efd;
+        }
+        
+        #enforcement-component .bar-label {
+            margin-top: 8px; /* Space between axis and label */
+            font-size: 13px;
+            color: #6c757d;
+            font-weight: 500;
         }
         
         #enforcement-component .date-header {
@@ -228,13 +233,41 @@
     <div class="content-wrapper">
         <div class="chart-container">
             <div class="bar-chart">
-                <div class="bar-item"><div class="bar" style="height: 85%;"></div><div class="bar-value">$52,750,177</div><div class="bar-label">SEC</div></div>
-                <div class="bar-item"><div class="bar" style="height: 75%;"></div><div class="bar-value">$1,496,376</div><div class="bar-label">FINRA</div></div>
-                <div class="bar-item"><div class="bar" style="height: 40%;"></div><div class="bar-value">$6</div><div class="bar-label">OFAC</div></div>
-                <div class="bar-item"><div class="bar" style="height: 30%;"></div><div class="bar-value">$9,391,901</div><div class="bar-label">CFTC</div></div>
-                <div class="bar-item"><div class="bar" style="height: 10%;"></div><div class="bar-value">$50,000,000</div><div class="bar-label">OCC</div></div>
-                <div class="bar-item"><div class="bar" style="height: 15%;"></div><div class="bar-value">$140,000,000</div><div class="bar-label">FINCEN</div></div>
-                <div class="bar-item"><div class="bar" style="height: 5%;"></div><div class="bar-value">$1,000,000</div><div class="bar-label">CFPB</div></div>
+                <div class="bar-item">
+                    <div class="bar-value">$52.7M</div>
+                    <div class="bar" style="height: 55%;"></div>
+                    <div class="bar-label">SEC</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-value">$1.5M</div>
+                    <div class="bar" style="height: 20%;"></div>
+                    <div class="bar-label">FINRA</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-value">$6</div>
+                    <div class="bar" style="height: 10%;"></div>
+                    <div class="bar-label">OFAC</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-value">$9.4M</div>
+                    <div class="bar" style="height: 30%;"></div>
+                    <div class="bar-label">CFTC</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-value">$50M</div>
+                    <div class="bar" style="height: 52%;"></div>
+                    <div class="bar-label">OCC</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-value">$140M</div>
+                    <div class="bar" style="height: 95%;"></div>
+                    <div class="bar-label">FINCEN</div>
+                </div>
+                <div class="bar-item">
+                    <div class="bar-value">$1M</div>
+                    <div class="bar" style="height: 18%;"></div>
+                    <div class="bar-label">CFPB</div>
+                </div>
             </div>
         </div>
 
