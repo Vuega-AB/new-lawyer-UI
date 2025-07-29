@@ -1,5 +1,294 @@
-<!-- Content for pages/enforcement.html -->
-<div class="card">
-    <h1>Enforcement</h1>
-    <p>Content for the Enforcement page will go here.</p>
+<!-- Start of Enforcement Component -->
+<div id="enforcement-component">
+    <!-- Font Awesome stylesheet link to make icons appear -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Scoped styles to prevent conflicts */
+        #enforcement-component {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            color: #212529;
+            background-color: #fff;
+            position: relative;
+        }
+
+        #enforcement-component .header-bar {
+            background: #fff;
+            border-bottom: 1px solid #dee2e6;
+            padding: 12px 24px;
+            display: flex;
+            flex-wrap: wrap; 
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 500;
+            gap: 10px;
+        }
+
+        #enforcement-component .header-bar .left {
+            font-size: 14px;
+            color: #6c757d;
+        }
+
+        #enforcement-component .header-bar .right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #enforcement-component .header-bar .right button {
+            border: none;
+            background: transparent;
+            font-size: 16px;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 6px;
+        }
+        
+        #enforcement-component .header-bar .right button:hover {
+            color: #0d6efd;
+        }
+
+        #enforcement-component .content-wrapper {
+            padding: 24px;
+        }
+
+        #enforcement-component .chart-container {
+            background: #fff;
+            padding: 24px;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 24px;
+        }
+        
+        #enforcement-component .bar-chart {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 150px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 10px;
+            gap: 10px;
+        }
+
+        #enforcement-component .bar-item {
+            display: flex;
+            flex-direction: column-reverse; /* Puts label at bottom */
+            align-items: center;
+            justify-content: flex-start;
+            flex: 1; 
+            text-align: center;
+            height: 100%;
+        }
+
+        #enforcement-component .bar-label {
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        #enforcement-component .bar-value {
+            margin-bottom: 8px;
+             font-size: 12px;
+             font-weight: 600;
+             color: #343a40;
+        }
+        
+        #enforcement-component .bar {
+            width: 80%;
+            max-width: 40px;
+            background-color: #5b99e5;
+            border-radius: 3px 3px 0 0;
+        }
+        
+        #enforcement-component .date-header {
+            background-color: #e9efff;
+            color: #0d6efd;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 24px 0;
+        }
+        
+        #enforcement-component .card {
+            background-color: #fff;
+            border-bottom: 1px solid #dee2e6;
+            padding: 20px 0;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        #enforcement-component .card-checkbox {
+            margin-top: 5px;
+            transform: scale(1.2);
+        }
+
+        #enforcement-component .card-content {
+            flex: 1;
+        }
+
+        #enforcement-component .card-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0d6efd;
+            margin: 0 0 12px;
+            cursor: pointer;
+        }
+        
+        #enforcement-component .card-header h3:hover {
+            text-decoration: underline;
+        }
+
+        #enforcement-component .card-details {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        #enforcement-component .card-details strong {
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        #enforcement-component .topics-section {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #enforcement-component .topics-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #6c757d;
+        }
+
+        #enforcement-component .pill {
+            display: inline-block;
+            padding: 4px 12px;
+            background-color: #e9ecef;
+            color: #495057;
+            font-size: 13px;
+            font-weight: 500;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+        }
+        
+        #enforcement-component .fixed-buttons {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1000;
+            display: flex;
+            gap: 8px;
+        }
+        
+        #enforcement-component .contact-btn {
+            background: #0d6efd;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        #enforcement-component .accessibility-btn {
+            background: #0d6efd;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+    </style>
+
+    <div class="header-bar">
+        <div class="left">132 results 1 - 20 of 132</div>
+        <div class="right">
+            <button title="Previous"><i class="fas fa-angle-left"></i></button>
+            <button title="Next"><i class="fas fa-angle-right"></i></button>
+            <button title="Copy Link"><i class="fas fa-link"></i></button>
+            <button title="Filter"><i class="fas fa-filter"></i></button>
+            <button title="More Options"><i class="fas fa-ellipsis-v"></i></button>
+            <button title="Settings"><i class="fas fa-cog"></i></button>
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="chart-container">
+            <div class="bar-chart">
+                <div class="bar-item"><div class="bar" style="height: 85%;"></div><div class="bar-value">$52,750,177</div><div class="bar-label">SEC</div></div>
+                <div class="bar-item"><div class="bar" style="height: 75%;"></div><div class="bar-value">$1,496,376</div><div class="bar-label">FINRA</div></div>
+                <div class="bar-item"><div class="bar" style="height: 40%;"></div><div class="bar-value">$6</div><div class="bar-label">OFAC</div></div>
+                <div class="bar-item"><div class="bar" style="height: 30%;"></div><div class="bar-value">$9,391,901</div><div class="bar-label">CFTC</div></div>
+                <div class="bar-item"><div class="bar" style="height: 10%;"></div><div class="bar-value">$50,000,000</div><div class="bar-label">OCC</div></div>
+                <div class="bar-item"><div class="bar" style="height: 15%;"></div><div class="bar-value">$140,000,000</div><div class="bar-label">FINCEN</div></div>
+                <div class="bar-item"><div class="bar" style="height: 5%;"></div><div class="bar-value">$1,000,000</div><div class="bar-label">CFPB</div></div>
+            </div>
+        </div>
+
+        <div class="list-container">
+            <div class="date-header">
+                <h2>Monday, June 23rd, 2025</h2>
+            </div>
+
+            <div class="card">
+                <input type="checkbox" class="card-checkbox" />
+                <div class="card-content">
+                    <div class="card-header"><h3>At My Sunshine Funeral Directors Enock Thabo Msiza</h3></div>
+                    <div class="card-details">
+                        <strong>Agency:</strong> ZAF-FSCA • <strong>Doc Type:</strong> Enforcement Order • <strong>Docket ID:</strong> ZAF-FSCA At My Sunshine Fun...<br>
+                        <strong>Citation:</strong> e9b5a78151233ce... • <strong>Published:</strong> June 23, 2025 • <strong>Added to Compliance.ai:</strong> June 23, 2025<br>
+                        <strong>Penalty:</strong> RESTRICTED • <strong>Respondent:</strong> RESTRICTED • <strong>Violation:</strong> RESTRICTED
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <input type="checkbox" class="card-checkbox" />
+                <div class="card-content">
+                    <div class="card-header"><h3>Keipoleletse Funerals Mr. Baswabile Andrew Moremane</h3></div>
+                     <div class="card-details">
+                        <strong>Agency:</strong> ZAF-FSCA • <strong>Doc Type:</strong> Enforcement Order • <strong>Docket ID:</strong> ZAF-FSCA Keipoleletse Funeral...<br>
+                        <strong>Citation:</strong> 6a947d1c2b716c... • <strong>Published:</strong> June 23, 2025 • <strong>Added to Compliance.ai:</strong> June 23, 2025<br>
+                        <strong>Penalty:</strong> RESTRICTED • <strong>Respondent:</strong> RESTRICTED • <strong>Violation:</strong> RESTRICTED
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <input type="checkbox" class="card-checkbox" />
+                <div class="card-content">
+                    <div class="card-header"><h3>Bingshan Song AWCs (Letters of Acceptance, Waiver, and Consent)</h3></div>
+                    <div class="card-details">
+                        <strong>Agency:</strong> FINRA • <strong>Doc Type:</strong> Enforcement • <strong>Docket ID:</strong> FINRA:2022077267703<br>
+                        <strong>Citation:</strong> d5381793f74e92d... • <strong>Published:</strong> June 23, 2025 • <strong>Added to Compliance.ai:</strong> June 23, 2025<br>
+                        <strong>Penalty:</strong> RESTRICTED • <strong>Respondent:</strong> RESTRICTED • <strong>Violation:</strong> RESTRICTED
+                    </div>
+                    <div class="topics-section">
+                        <span class="topics-label">Topics</span>
+                        <span class="pill">Securities</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Buttons -->
+    <div class="fixed-buttons">
+        <button class="contact-btn">Contact Us</button>
+        <button class="accessibility-btn" title="Accessibility Options"><i class="fas fa-universal-access"></i></button>
+    </div>
 </div>
+<!-- End of Enforcement Component -->
