@@ -1,0 +1,150 @@
+<!-- frontend/app/pages/resources.html -->
+
+<!-- This is the main container for the entire page component -->
+<div id="resources-page-container">
+
+    <!-- The content of the resources page, now wrapped to sit next to the vertical tabs -->
+    <div id="resources-page">
+
+        <!-- 1. Component-Specific Header -->
+        <header class="page-header">
+            <h1 class="header-title">
+                <span>Jurisdiction Analyzer</span>
+                <i class="fas fa-info-circle" title="Information"></i>
+            </h1>
+            <div class="filters-bar">
+                <select class="filter-dropdown"> <option selected>United Kingdom</option> </select>
+                <select class="filter-dropdown"> <option selected>National Cyber Security Centre UK</option> </select>
+                <select class="filter-dropdown"> <option selected>Guidance</option> </select>
+            </div>
+        </header>
+
+        <!-- 2. Main Three-Panel Content Area -->
+        <div class="main-content-area">
+            <!-- Left Panel -->
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="resource-list-item">NCSC Cyber Assessment Framework (April 2022)</div>
+                    <div class="resource-list-item active">Cyber Essentials: Requirements for IT...</div>
+                    <div class="resource-list-item">NCSC Cyber Assessment Framework (...</div>
+                    <div class="resource-list-item">NCSC Cyber Assessment Framework (...</div>
+                </div>
+            </div>
+            <!-- Middle Panel -->
+            <div class="panel">
+                <div class="panel-body">
+                    <ul class="tree-view-list">
+                        <li class="active"><i class="fas fa-folder"></i><span>00-Intro: Cyber Assessment Framework</span></li>
+                        <li><i class="fas fa-chevron-right"></i><span>01 The CAF – A Tool For Assessing C...</span></li>
+                        <li><i class="fas fa-chevron-right"></i><span>02 CAF Requirements</span></li>
+                        <li><i class="fas fa-chevron-right"></i><span>03 CAF - Outline Approach</span></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Right Panel -->
+            <div class="panel">
+                <div class="details-panel-header">
+                    <h4 class="details-panel-title">00-Intro: Cyber Assessment Framework</h4>
+                    <div class="header-icons"><i class="fas fa-sync-alt" title="Compare"></i></div>
+                </div>
+                <div class="details-panel-body">
+                    <div class="btn-group">
+                        <button class="btn-view">View PDF</button>
+                        <button class="btn-view-options"><i class="fas fa-chevron-down"></i></button>
+                    </div>
+                    <div class="details-section"><h4>Summary</h4><p>Introduction to the Cyber Assessment Framework</p></div>
+                    <div class="details-section"><h4>Agency</h4><p>UK-NCSC</p></div>
+                    <div class="details-section"><h4>Document ID</h4><p>14611730</p></div>
+                    <div class="details-section"><h4>Location</h4><p class="breadcrumb">National Cyber Security Centre: Guidance > ...</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Vertical Tab Bar on the far right -->
+    <div class="vertical-tab-bar">
+        <button class="v-tab active">
+            <i class="fas fa-file-alt"></i>
+            <span>Document Details</span>
+        </button>
+        <button class="v-tab" id="tasks-tab-button">
+            <i class="fas fa-tasks"></i>
+            <span>Tasks</span>
+        </button>
+    </div>
+
+    <!-- 4. Modal HTML - initially hidden -->
+    <div class="modal-overlay" id="tasks-upgrade-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title">
+                    <i class="fas fa-gem"></i>Upgrade to use this feature.
+                </span>
+                <span class="modal-close" id="tasks-modal-close-btn">×</span>
+            </div>
+            <div class="modal-body">
+                <p>Automated Workflow capabilities simplifies collaboration across stakeholders by creating automatic to-do lists based on regulatory changes.</p>
+                <div class="features-grid">
+                    <div class="feature-box"><i class="fas fa-users fa-2x"></i><span>Manage Teams</span></div>
+                    <div class="feature-box"><i class="fas fa-sitemap fa-2x"></i><span>Create and Manage Workflows</span></div>
+                    <div class="feature-box"><i class="fas fa-check-double fa-2x"></i><span>Automatically assigned Tasks</span></div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary">Compare Editions</button>
+                <p>Already have an account? <a href="#">Login</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- All CSS is self-contained in this component -->
+<style>
+    /* Main Layout */
+    #resources-page-container { display: flex; height: 100%; width: 100%; background-color: var(--page-bg); }
+    #resources-page { flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .page-header { padding: 16px 24px; border-bottom: 1px solid var(--border-color); background-color: #fff; }
+    .header-title { font-size: 20px; font-weight: 600; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px; }
+    .filters-bar { display: flex; gap: 16px; }
+    .filter-dropdown { flex-grow: 1; padding: 10px 12px; border: 1px solid #ced4da; border-radius: 6px; font-size: 14px; }
+    .main-content-area { flex-grow: 1; display: grid; grid-template-columns: minmax(250px, 1.2fr) 2fr 1.5fr; gap: 24px; padding: 24px; overflow: hidden; }
+    .panel { background-color: #ffffff; border-radius: 8px; border: 1px solid var(--border-color); display: flex; flex-direction: column; overflow: hidden; }
+    .panel-body { padding: 8px; overflow-y: auto; }
+    .resource-list-item { padding: 12px 16px; font-size: 14px; cursor: pointer; border-radius: 4px; border-left: 3px solid transparent; }
+    .resource-list-item.active { background-color: #dbeaff; border-left-color: var(--primary-blue); color: var(--primary-blue); font-weight: 500; }
+    .tree-view-list { list-style: none; padding: 0; margin: 0; }
+    .tree-view-list li { padding: 10px 16px; font-size: 14px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+    .tree-view-list li.active { background-color: var(--primary-blue); color: white; }
+    .tree-view-list li.active i, .tree-view-list li:hover i { color: inherit; }
+    .details-panel-header { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-bottom: 1px solid var(--border-color); }
+    .details-panel-title { font-size: 16px; font-weight: 600; margin: 0; }
+    .details-panel-body { padding: 20px; overflow-y: auto; }
+    .btn-group { display: flex; gap: 8px; margin-bottom: 24px; }
+    .btn-view { flex-grow: 1; padding: 12px; background-color: var(--primary-blue); color: white; border: none; border-radius: 6px; font-size: 14px; }
+    .btn-view-options { padding: 12px; background-color: var(--primary-blue); color: white; border: none; border-radius: 6px; }
+    .details-section h4 { font-size: 14px; margin: 0 0 4px 0; }
+    .details-section p { font-size: 14px; margin: 0 0 20px 0; }
+    .breadcrumb { color: var(--primary-blue); }
+    .vertical-tab-bar { width: 90px; background-color: #fff; border-left: 1px solid var(--border-color); display: flex; flex-direction: column; padding: 8px; gap: 8px; flex-shrink: 0; }
+    .v-tab { width: 100%; padding: 12px 8px; border: 1px solid transparent; border-radius: 6px; background: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 12px; color: #495057; }
+    .v-tab:hover { background-color: #f8f9fa; }
+    .v-tab.active { background-color: #e9ecef; border-color: #dee2e6; }
+    .v-tab i { font-size: 20px; }
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); justify-content: center; align-items: center; z-index: 10000; }
+    .modal-content { background-color: #fff; padding: 24px; width: 550px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border-top: 4px solid #7e3ff2; display: flex; flex-direction: column; gap: 20px; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; font-weight: 600; }
+    .modal-title { font-size: 18px; display: flex; align-items: center; gap: 8px; }
+    .modal-title .fa-gem { color: #7e3ff2; }
+    .modal-close { font-size: 28px; color: #aaa; cursor: pointer; line-height: 1; }
+    .modal-body p { font-size: 15px; color: #555; text-align: center; line-height: 1.6; margin: 0 0 24px 0; }
+    .features-grid { display: flex; justify-content: space-around; gap: 16px; }
+    .feature-box { text-align: center; color: #6c757d; background-color: #f8f9fa; border: 1px solid #e9ecef; padding: 20px; border-radius: 8px; width: 130px; }
+    .feature-box i { margin-bottom: 12px; color: #888; }
+    .feature-box span { display: block; font-weight: 500; font-size: 13px; line-height: 1.4; }
+    .modal-actions { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .modal-actions .btn-primary { background-color: #0d6efd; color: white; padding: 12px 28px; border: none; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; }
+    .modal-actions p { margin: 0; font-size: 14px; }
+    .modal-actions a { color: #0d6efd; text-decoration: none; font-weight: 500; }
+</style>
+
+<!-- SCRIPT BLOCK IS REMOVED FROM HERE -->
